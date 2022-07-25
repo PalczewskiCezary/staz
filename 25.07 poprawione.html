@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta id="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            line-height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <label>Podaj imię: </label>
+        <input type="text" id="imie"><br>
+        <label>Podaj nazwisko: </label>
+        <input type="text" id="nazwisko"><br>
+        <label>Podaj wiek: </label>
+        <input type="text" id="wiek"><br>
+        <label>Podaj email: </label>
+        <input type="text" id="email"><br>
+        <label>Podaj opis: </label>
+        <input type="text" id="opis"><br>
+        <label>Wybierz płeć: </label>
+        <select id="select">
+            <option value="Kobieta">Kobieta</option>
+            <option value="Mężczyzna">Mężczyzna</option>
+        </select><br>
+        <button type="button" id="przycisk">wyslij</button>
+        
+    </form>
+    <div id="blok"></div>
+    <script>
+        var przycisk = document.getElementById("przycisk");
+        przycisk.onclick = function() {
+            var imie = document.getElementById("imie").value; 
+        var nazwisko = document.getElementById("nazwisko").value;
+        var wiek = document.getElementById("wiek").value;
+        var email = document.getElementById("email").value;
+        var opis = document.getElementById("opis").value;
+        var select = document.getElementById("select").value;
+        var blok = document.getElementById("blok"); 
+        const stringRE = new RegExp('[A-Za-z]');
+        const mailRE = new RegExp('.+@.+');
+        const intRE = new RegExp('[0-9]');
+            const zmienna = stringRE.test(imie);
+            const zmienna2 = stringRE.test(nazwisko);
+            const zmienna3 = intRE.test(wiek);
+            const zmienna4 = mailRE.test(email);
+            const zmienna5 = stringRE.test(opis);
+            if (zmienna==true && zmienna2==true && zmienna3==true && zmienna4==true && zmienna5==true) {
+                blok.innerHTML+=imie+"<br>"+nazwisko+"<br>"+wiek+"<br>"+email+"<br>"+opis+"<br>"+select;
+            }
+   
+            else {
+                alert("BŁĄD!!");
+            }
+        }
+    </script>
+</body>
+</html>
