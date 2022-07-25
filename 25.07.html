@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta id="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            line-height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form">
+        <label>Podaj imię: </label>
+        <input type="text" name="name" id="name"><br>
+        <label>Podaj nazwisko: </label>
+        <input type="text" name="surname" id="surname"><br>
+        <label>Podaj wiek: </label>
+        <input type="text" name="age" id="age"><br>
+        <label>Podaj email: </label>
+        <input type="text" name="email" id="email"><br>
+        <label>Podaj opis: </label>
+        <input type="text" name="description" id="description"><br>
+        <label>Wybierz płeć: </label>
+        <select name="select" id="select">
+            <option value="Kobieta">Kobieta</option>
+            <option value="Mężczyzna">Mężczyzna</option>
+        </select><br>
+        <button type="submit" id="button">wyslij</button>
+        
+    </form>
+    <output id="output"></output>
+    <script>
+        const form = document.getElementById('form');
+     
+        form.onsubmit = function() {
+            const formData = new FormData(form);
+           
+        const stringRE = new RegExp('[A-Za-z]+');
+        const mailRE = new RegExp('.+@.+');
+        const intRE = new RegExp('^[0-9]+$');
+            const variable = stringRE.test(formData.get('name'));
+            const variable2 = stringRE.test(formData.get('surname'));
+            const variable3 = intRE.test(formData.get('age'));
+            const variable4 = mailRE.test(formData.get('email'));
+            const variable5 = stringRE.test(  formData.get('description'));
+            if (variable && variable2 && variable3 && variable4 && variable5) {
+                blok.innerHTML+=formData.get('name')+"<br>"+
+                formData.get('surname')+"<br>"+formData.get('age')+"<br>"+formData.get('email')+"<br>"+
+                formData.get('description')+"<br>"+formData.get('select');
+            }
+   
+            else {
+                alert("BŁĄD!!");
+            }
+        }
+    </script>
+</body>
+</html>
