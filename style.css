@@ -7,13 +7,9 @@ body {
     width: 300px;
     line-height: 30px;
  }
- label {
-    text-align: left;
- }
 input, button, select {
     float: right;
  }
  select {
     height: 20px;
  }
- 
