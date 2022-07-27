@@ -4,12 +4,22 @@ body {
     background-color: lightgrey;
 }
  #output {
+    display: flex;
     width: 300px;
     line-height: 30px;
+    flex-wrap: wrap;
  }
-input, button, select {
-    float: right;
+ #form {
+   display: flex;
+   flex-direction: column;
  }
- select {
-    height: 20px;
+ button {
+    align-self: flex-end;
+    width: 50px;
+ }
+ .form-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
  }
