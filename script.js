@@ -16,7 +16,7 @@ form.onsubmit = function(e){
    
     if (variable && variable2 && variable3 && variable4 && variable5) {
         
-        output.innerHTML=formData.get('name')+"<br>"+formData.get('surname')+"<br>"+
+        output.innerHTML+=formData.get('name')+"<br>"+formData.get('surname')+"<br>"+
         formData.get('age')+"<br>"+formData.get('email')+"<br>"+
         formData.get('description')+"<br>"+formData.get('select');
     }
