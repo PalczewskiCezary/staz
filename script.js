@@ -20,9 +20,10 @@ form.onsubmit = function(e){
         formData.get('age')+"<br>"+formData.get('email')+"<br>"+
         formData.get('description')+"<br>"+formData.get('select');
     }
-
     else {
-        alert("BŁĄD!!");
+    const img = document.getElementById("alert");
+    img.innerHTML="<img src='https://www.computerhope.com/jargon/e/error.png'><p>Proszę poprawnie wprowadzić dane!</p>";
+    img.innerHTML+="<a href='file:///C:/Users/Stażysta.DESKTOP-OCNKI6H/Desktop/staz/index.html'>OK</a>"
+    img.innerHTML+="<style>#alertbg{display: flex;}</style>";
     }
-    
 };
