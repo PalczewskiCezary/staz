@@ -21,9 +21,21 @@ form.onsubmit = function(e){
         formData.get('description')+"<br>"+formData.get('select');
     }
     else {
-    const img = document.getElementById("alert");
-    img.innerHTML="<img src='https://www.computerhope.com/jargon/e/error.png'><p>Proszę poprawnie wprowadzić dane!</p>";
-    img.innerHTML+="<a href='file:///C:/Users/Stażysta.DESKTOP-OCNKI6H/Desktop/staz/index.html'>OK</a>"
-    img.innerHTML+="<style>#alertbg{display: flex;}</style>";
+        const alertbg = document.getElementById("alertbg");
+        alertbg.style.display = "flex";
+        const btn = document.createElement("button");
+        btn.textContent="OK"
+        const alert = document.getElementById("alert");
+        const p = document.createElement("p");
+        p.textContent="Proszę poprawnie wprowadzić dane!"
+        const img = document.createElement("img")
+        img.src = "https://www.computerhope.com/jargon/e/error.png";
+        alert.appendChild(img);
+        alert.appendChild(p)
+        alert.appendChild(btn)
+        btn.onclick  = function(){
+            alertbg.style.display = "none";
+            alert.innerHTML="";
+        }
     }
 };
