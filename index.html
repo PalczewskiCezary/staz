@@ -13,35 +13,47 @@
         <div class="form-item">
         <label for="name" >Podaj imię: </label>
         <input type="text" name="name" id="name" >
+        <small></small>
         </div>
         <div class="form-item">
         <label for="surname" >Podaj nazwisko: </label>
         <input type="text" name="surname" id="surname" >
+        <small></small>
         </div>
         <div class="form-item">
         <label for="age" >Podaj wiek: </label>
-        <input type="text" name="age" id="age" >
+        <input type="text" name="age" id="age" disabled>
+        <small></small>
         </div>
         <div class="form-item">
         <label for="email" >Podaj email: </label>
         <input type="text" name="email" id="email" >
+        <small></small>
         </div>
         <div class="form-item">
         <label for="description" >Podaj opis: </label>
         <input type="text" name="description" id="description">
+        <small></small>
         </div>
         <div class="form-item">
+            <label for="birth" >Podaj date urodzenia: </label>
+            <input type="text" name="birth" id="birth" disabled>
+            <small></small>
+            </div>
+        <div class="form-item">
+                <label for="pesel" >Podaj pesel: </label>
+                <input type="text" name="pesel" id="pesel">
+                <small></small>
+            </div>
+        <div class="form-item">
         <label for="select" >Wybierz płeć: </label>
-        <select name="select" id="select" >
+        <select name="select" id="select" disabled>
             <option value="Kobieta">Kobieta</option>
             <option value="Mężczyzna">Mężczyzna</option>
         </select>
         </div>
         <button type="submit" id="button">wyslij</button>      
     </form>
-    <div id="alertbg">
-        <div id="alert"></div>
-    </div>
     </div>
 </body>
 </html>
