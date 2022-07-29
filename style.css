@@ -14,17 +14,20 @@ body {
    display: flex;
    flex-direction: column;
  }
- button {
-    align-self: flex-end;
-    width: 50px;
+ #button {
+   color: black;
+   font-size: 15px;
+   font-weight: normal;
  }
  .form-item {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    flex-direction: column;
+    padding: 10px;
  }
- #alertbg {
+ #alert {
    top: 0;
    display: none;
    left: 0;
@@ -35,7 +38,7 @@ body {
    align-items: center;
    background-color: rgba(0, 0, 0, 0.1);
  }
- #alert {
+ #alert > div {
    box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
    border-radius: 10%;
    padding: 10px;
@@ -57,10 +60,11 @@ p {
 }
 a {
    text-decoration: none;
-   color: lime;
-   font-size: 30px;
-   font-weight: bold;
+  
 }
 button {
    align-self: center;
+   color: lime;
+   font-size: 30px;
+   font-weight: bold;
 }
