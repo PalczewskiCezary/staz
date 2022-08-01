@@ -3,11 +3,12 @@ const output = document.getElementById("output");
 
 const nameEL = document.querySelector('#name');
 const surnameEL = document.querySelector('#surname');
-//const ageEL = document.querySelector('#age');
+const ageEL = document.querySelector('#age');
 const emailELE = document.querySelector('#email');
 const descriptionEL = document.querySelector('#description');
 const peselEL = document.querySelector('#pesel');
     const checkname = () => {
+        const re = new RegExp('[A-Za-z]+');
         let valid = false;
         const min = 3, max = 25;
         const name = nameEL.value.trim();
@@ -18,7 +19,7 @@ const peselEL = document.querySelector('#pesel');
             showError(nameEL, `Podaj poprawne imię`)
             nameEL.style.border="2px red solid";
         } 
-        else if (!isNameValid(name)) {
+        else if (!re.test(name)) {
             showError(nameEL, 'Podaj poprawne imię')
             nameEL.style.border="2px red solid";
         } 
@@ -30,6 +31,7 @@ const peselEL = document.querySelector('#pesel');
         return valid;
     };
     const checksurname = () => {
+        const re = new RegExp('[A-Za-z]+');
         let valid = false;
         const min = 3, max = 25;
         const surname = surnameEL.value.trim();
@@ -40,7 +42,7 @@ const peselEL = document.querySelector('#pesel');
             showError(surnameEL, `Podaj poprawne Nazwisko`)
             surnameEL.style.border="2px red solid";
         } 
-        else if (!isSurnameValid(surname)) {
+        else if (!re.test(surname)) {
             showError(surnameEL, 'Podaj poprawne Nazwisko')
             surnameEL.style.border="2px red solid";
         } 
@@ -51,14 +53,15 @@ const peselEL = document.querySelector('#pesel');
         }
         return valid;
     };
-   /* const checkage = () => {
+   const checkage = () => {
+        const re = new RegExp('^[0-9]+$');
         let valid = false;
         const age = ageEL.value.trim();
         if (!isRequired(age)) {
             showError(ageEL, 'Pole nie może być puste');
             ageEL.style.border="2px red solid";
         } 
-        else if (!isAgeValid(age)) {
+        else if (!re.test(age)) {
             showError(ageEL, 'Podaj poprawny wiek')
             ageEL.style.border="2px red solid";
         } 
@@ -68,14 +71,15 @@ const peselEL = document.querySelector('#pesel');
             ageEL.style.border="2px green solid";
         }
         return valid;
-    }; */
+    }; 
     const checkemail = () => {
+        const re = new RegExp('.+@.+');
         let valid = false;
         const email = emailELE.value.trim();
         if (!isRequired(email)) {
             showError(emailELE, 'Pole nie może być puste');
             emailELE.style.border="2px red solid";
-        } else if (!isEmailValid(email)) {
+        } else if (!re.test(email)) {
             showError(emailELE, 'Podaj poprawny email')
             emailELE.style.border="2px red solid";
         } else {
@@ -85,15 +89,45 @@ const peselEL = document.querySelector('#pesel');
         }
         return valid;
     };
+    const handlePesel = (value) => {
+        const pesel = peselEL.value.trim();
+        let year = parseInt(pesel.substring(0,2),10);
+        let month = parseInt(pesel.substring(2,4),10)-1;
+        let day = parseInt(pesel.substring(4,6),10);
+        if (checkpesel()) {
+        if (month > 12) {
+            yearofbirth = 2000 + year;
+        }
+        else {
+            yearofbirth = 1900 + year;
+        }
+        document.getElementById("birth").value ="0"+day+" 0"+month+" "+yearofbirth;
+        if (month > 12) {
+            year = 2022 - (2000 + year);
+            month = month - 20;
+        }
+        else {
+            year = 2022 - (1900 + year);
+        }
+        document.getElementById("age").value = year;
+        console.log(value)
+    }
+    else {
+        document.getElementById("birth").value ="";
+        document.getElementById("age").value ="";
+    }
+}
+
     const checkdescription = () => {
+        const re = new RegExp('[A-Za-z]+');
         let valid = false;
         const description = descriptionEL.value.trim();
         if (!isRequired(description)) {
             showError(descriptionEL, 'Pole nie może być puste');
             descriptionEL.style.border="2px red solid";
         } 
-        else if (!isDescriptionValid(description)) {
-            showError(descriptionEL, 'Podaj poprawny email')
+        else if (!re.test(description)) {
+            showError(descriptionEL, 'Podaj poprawny opis')
             descriptionEL.style.border="2px red solid";
         }
         else {
@@ -104,16 +138,29 @@ const peselEL = document.querySelector('#pesel');
         return valid;
     };
     const checkpesel = () => {
+        const re = new RegExp('^[0-9]+$');
         let valid = false;
         const pesel = peselEL.value.trim();
+        const weight = [9,7,3,1,9,7,3,1,9,7];
+        let sum = 0;
+        for (let i =1;i<weight.length;i++) {
+            sum+=(parseInt(pesel.substring(i,i+1),10)*weight[i]);
+        }
+        sum=sum%10;
+        const control = parseInt(pesel.substring(10,11),10);
+        let corectness = (sum === control);
         if (!isRequired(pesel)) {
             showError(peselEL, 'Pole nie może być puste');
             peselEL.style.border="2px red solid";
         } 
-        else if (!isPeselValid(pesel)) {
+        else if (!re.test(pesel)) {
             showError(peselEL, 'Podaj poprawny pesel')
             peselEL.style.border="2px red solid";
         } 
+        else if(!corectness) {
+            showError(peselEL, 'Podaj poprawny pesel')
+            peselEL.style.border="2px red solid";
+        }
         else {
             showSuccess(peselEL);
             valid = true;
@@ -121,30 +168,6 @@ const peselEL = document.querySelector('#pesel');
         }
         return valid;
     };
-    const isNameValid = (name) => {
-        const re = new RegExp('[A-Za-z]+');
-        return re.test(name);
-    }  
-    const isSurnameValid = (surname) => {
-        const re = new RegExp('[A-Za-z]+');
-        return re.test(surname);
-    } 
-    const isEmailValid = (email) => {
-        const re = new RegExp('.+@.+');
-        return re.test(email);
-    };
-   /* const isAgeValid = (age) => {
-        const re = new RegExp('^[0-9]+$');
-        return re.test(age);
-    } */
-    const isDescriptionValid = (description) => {
-        const re = new RegExp('[A-Za-z]+');
-        return re.test(description);
-    }
-    const isPeselValid = (pesel) => {
-        const re = new RegExp('^[0-9]+$');
-        return re.test(pesel);
-    }
     const isRequired = value => value === '' ? false : true;
     const isBetween = (length, min, max) => length < min || length > max ? false : true;
     const showError = (input, message) => {
@@ -162,19 +185,13 @@ const peselEL = document.querySelector('#pesel');
         error.textContent = '';
     }
     form.addEventListener('submit', function (e) {   
-        e.preventDefault();
-        let isNameValid = checkname(),
-         isSurnameValid = checksurname(),
-        // isAgeValid = checkage(),
-         isEmailValid = checkemail(),
-         isDescriptionValid = checkdescription(),
-         isPeselValid = checkpesel();        
-        let isFormValid = isNameValid &&
-            isSurnameValid &&
-           // isAgeValid &&
-            isEmailValid &&
-            isDescriptionValid &&
-            isPeselValid;
+        e.preventDefault();     
+        let isFormValid = checkname() &&
+        checksurname() &&
+           checkage() &&
+           checkemail() &&
+           checkdescription() &&
+           checkpesel();
             if (isFormValid) {
 
             }
@@ -198,9 +215,9 @@ const peselEL = document.querySelector('#pesel');
             case 'surname':
                 checksurname();
                 break;
-     /*       case 'age':
+           case 'age':
                 checkage();
-                break; */
+                break; 
             case 'email':
                 checkemail();
                 break;
@@ -208,13 +225,14 @@ const peselEL = document.querySelector('#pesel');
                 checkdescription();
                 break;
             case 'pesel':
+                handlePesel(e.target.value)
                 checkpesel();
                 break;
             default:
                 break;
         }
     }));
-    psl = function(){
+    function psl(){
         const pesel = peselEL.value.trim();
         let year = parseInt(pesel.substring(0,2),10);
         let month = parseInt(pesel.substring(2,4),10)-1;
@@ -240,6 +258,10 @@ const peselEL = document.querySelector('#pesel');
         }
         const dayofbirth = new Date();
         dayofbirth.setFullYear(year,month,day);
+        let sex = 'Kobieta';
+        if(parseInt(pesel.substring(9,10),10) % 2 === 1){
+            sex = 'Mężczyzna';
+        } 
         const weight = [9,7,3,1,9,7,3,1,9,7];
         let sum = 0;
         for (let i =1;i<weight.length;i++) {
@@ -247,19 +269,15 @@ const peselEL = document.querySelector('#pesel');
         }
         sum=sum%10;
         const control = parseInt(pesel.substring(10,11),10);
-        const corectness = (sum === control);
-        let sex = 'k';
-        if(parseInt(pesel.substring(9,10),10) % 2 === 1){
-            sex = 'm';
-        } 
+        let corectness = (sum === control);
         if(corectness){
-            output.innerHTML+= "<br>"+sex+"<br>"+dayofbirth;
+            output.innerHTML+= "<br>"+sex/*+"<br>"+dayofbirth*/;
         }
         else {
-            output.innerHTML+="<br>Niepoprawny pesel";
+            output.innerHTML="";
         }
     }
-fire = function() {
+    function fire() {
         const alertbg = document.createElement("div");
         alertbg.setAttribute("id", "alert");
         alertbg.style.display = "flex";
@@ -283,21 +301,10 @@ fire = function() {
 form.onsubmit = function(e){
     e.preventDefault();
     const formData = new FormData(form);
-    
-    const stringRE = new RegExp('[A-Za-z]+');
-    const mailRE = new RegExp('.+@.+');
-    const intRE = new RegExp('^[0-9]+$');
-   
-    const variable = stringRE.test(formData.get('name'));
-    const variable2 = stringRE.test(formData.get('surname'));
-    //const variable3 = intRE.test(formData.get('age'));
-    const variable4 = mailRE.test(formData.get('email'));
-    const variable5 = stringRE.test(formData.get('description'));
-    const variable6 = intRE.test(formData.get('pesel'));  
-    if (variable && variable2 && /*variable3 &&*/ variable4 && variable5 && variable6) {
-        output.innerHTML+=formData.get('name')+"<br>"+formData.get('surname')+/*"<br>"+
-        formData.get('age')+*/"<br>"+formData.get('email')+"<br>"+
-        formData.get('description')/*+"<br>"+formData.get('select')*/+"<br>"+formData.get('pesel');
+    if (checkname() && checksurname() && /*checkage() &&*/ checkemail() && checkdescription() && checkpesel()) {
+        output.innerHTML+=formData.get('name')+"<br>"+formData.get('surname')+"<br>"+
+        formData.get('age')+"<br>"+formData.get('email')+"<br>"+formData.get('description')
+        +"<br>"+formData.get('birth')/*+"<br>"+formData.get('select')*/+"<br>"+formData.get('pesel');
         psl();
     }
     else {
