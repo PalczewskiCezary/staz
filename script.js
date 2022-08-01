@@ -179,8 +179,6 @@ const peselEL = document.querySelector('#pesel');
 
             }
     });
-    
-    
     const debounce = (fn, delay = 500) => {
         let timeoutId;
         return (...args) => {
@@ -192,7 +190,6 @@ const peselEL = document.querySelector('#pesel');
             }, delay);
         };
     };
-    
     form.addEventListener('input', debounce(function (e) {
         switch (e.target.id) {
             case 'name':
@@ -217,7 +214,51 @@ const peselEL = document.querySelector('#pesel');
                 break;
         }
     }));
-
+    psl = function(){
+        const pesel = peselEL.value.trim();
+        let year = parseInt(pesel.substring(0,2),10);
+        let month = parseInt(pesel.substring(2,4),10)-1;
+        let day = parseInt(pesel.substring(4,6),10);
+        if (month >= 80) {
+            year += 1800;
+            month = month-80;
+        }
+        else if (month >= 60) {
+            year+=2200;
+            month = month-60;
+        }
+        else if (month >= 40) {
+            year+=2100;
+        month = month-40;
+        }
+        else if (month >= 20) {
+            year+=2000;
+            month = month-20;
+        }
+        else {
+            year+=1900;
+        }
+        const dayofbirth = new Date();
+        dayofbirth.setFullYear(year,month,day);
+        const weight = [9,7,3,1,9,7,3,1,9,7];
+        let sum = 0;
+        for (let i =1;i<weight.length;i++) {
+            sum+=(parseInt(pesel.substring(i,i+1),10)*weight[i]);
+        }
+        sum=sum%10;
+        const control = parseInt(pesel.substring(10,11),10);
+        const corectness = (sum === control);
+        let sex = 'k';
+        if(parseInt(pesel.substring(9,10),10) % 2 === 1){
+            sex = 'm';
+        } 
+        if(corectness){
+            output.innerHTML+= "<br>"+sex+"<br>"+dayofbirth;
+        }
+        else {
+            output.innerHTML+="<br>Niepoprawny pesel";
+        }
+    }
 fire = function() {
         const alertbg = document.createElement("div");
         alertbg.setAttribute("id", "alert");
@@ -252,13 +293,12 @@ form.onsubmit = function(e){
     //const variable3 = intRE.test(formData.get('age'));
     const variable4 = mailRE.test(formData.get('email'));
     const variable5 = stringRE.test(formData.get('description'));
-    const variable6 = intRE.test(formData.get('pesel'));
-   
+    const variable6 = intRE.test(formData.get('pesel'));  
     if (variable && variable2 && /*variable3 &&*/ variable4 && variable5 && variable6) {
-        
         output.innerHTML+=formData.get('name')+"<br>"+formData.get('surname')+/*"<br>"+
         formData.get('age')+*/"<br>"+formData.get('email')+"<br>"+
         formData.get('description')/*+"<br>"+formData.get('select')*/+"<br>"+formData.get('pesel');
+        psl();
     }
     else {
         fire();
