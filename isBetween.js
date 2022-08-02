@@ -1,1 +1,0 @@
-export const isBetween = (length, min, max) => length < min || length > max ? false : true;
