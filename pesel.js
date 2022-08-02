@@ -1,4 +1,4 @@
-const handlePesel = (value, pesel) => {
+export const handlePesel = (value, pesel) => {
     let year = parseInt(pesel.substring(0,2),10);
     let month = parseInt(pesel.substring(2,4),10)-1;
     let day = parseInt(pesel.substring(4,6),10);
