@@ -1,3 +1,6 @@
+import { fire } from "./fire";
+import { isBetween, isRequired } from "./validation";
+import { debounce } from "./debounce";
 const form = document.getElementById('form');
 const output = document.getElementById("output");
 
@@ -91,6 +94,7 @@ const peselEL = document.querySelector('#pesel');
     };
     const handlePesel = (value) => {
         const pesel = peselEL.value.trim();
+        let yearofbirth;
         let year = parseInt(pesel.substring(0,2),10);
         let month = parseInt(pesel.substring(2,4),10)-1;
         let day = parseInt(pesel.substring(4,6),10);
@@ -168,8 +172,6 @@ const peselEL = document.querySelector('#pesel');
         }
         return valid;
     };
-    const isRequired = value => value === '' ? false : true;
-    const isBetween = (length, min, max) => length < min || length > max ? false : true;
     const showError = (input, message) => {
         const formitem = input.parentElement;
         formitem.classList.remove('success');
@@ -196,17 +198,6 @@ const peselEL = document.querySelector('#pesel');
 
             }
     });
-    const debounce = (fn, delay = 500) => {
-        let timeoutId;
-        return (...args) => {
-            if (timeoutId) {
-                clearTimeout(timeoutId);
-            }
-            timeoutId = setTimeout(() => {
-                fn.apply(null, args)
-            }, delay);
-        };
-    };
     form.addEventListener('input', debounce(function (e) {
         switch (e.target.id) {
             case 'name':
@@ -232,7 +223,7 @@ const peselEL = document.querySelector('#pesel');
                 break;
         }
     }));
-    function psl(){
+    function pesel(){
         const pesel = peselEL.value.trim();
         let year = parseInt(pesel.substring(0,2),10);
         let month = parseInt(pesel.substring(2,4),10)-1;
@@ -277,27 +268,6 @@ const peselEL = document.querySelector('#pesel');
             output.innerHTML="";
         }
     }
-    function fire() {
-        const alertbg = document.createElement("div");
-        alertbg.setAttribute("id", "alert");
-        alertbg.style.display = "flex";
-        const alert = document.createElement("div");
-        const btn = document.createElement("button");
-        btn.textContent="OK"
-        const p = document.createElement("p");
-        p.textContent="Proszę poprawnie wprowadzić dane!"
-        const img = document.createElement("img")
-        img.src = "https://www.computerhope.com/jargon/e/error.png";
-        alert.appendChild(img);
-        alert.appendChild(p)
-        alert.appendChild(btn)
-        alertbg.appendChild(alert)
-        document.body.appendChild(alertbg)
-        btn.onclick  = function(){
-            alertbg.style.display = "none";
-            alert.innerHTML="";
-        }
-}
 form.onsubmit = function(e){
     e.preventDefault();
     const formData = new FormData(form);
@@ -305,7 +275,7 @@ form.onsubmit = function(e){
         output.innerHTML+=formData.get('name')+"<br>"+formData.get('surname')+"<br>"+
         formData.get('age')+"<br>"+formData.get('email')+"<br>"+formData.get('description')
         +"<br>"+formData.get('birth')/*+"<br>"+formData.get('select')*/+"<br>"+formData.get('pesel');
-        psl();
+        pesel();
     }
     else {
         fire();
