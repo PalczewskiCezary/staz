@@ -1,6 +1,7 @@
 import { fire } from "./fire";
 import { isBetween, isRequired } from "./validation";
 import { debounce } from "./debounce";
+import { getPeselDate, isPeselValid } from "./pesel";
 const form = document.getElementById('form');
 const output = document.getElementById("output");
 
@@ -92,36 +93,6 @@ const peselEL = document.querySelector('#pesel');
         }
         return valid;
     };
-    const handlePesel = (value) => {
-        const pesel = peselEL.value.trim();
-        let yearofbirth;
-        let year = parseInt(pesel.substring(0,2),10);
-        let month = parseInt(pesel.substring(2,4),10)-1;
-        let day = parseInt(pesel.substring(4,6),10);
-        if (checkpesel()) {
-        if (month > 12) {
-            yearofbirth = 2000 + year;
-        }
-        else {
-            yearofbirth = 1900 + year;
-        }
-        document.getElementById("birth").value ="0"+day+" 0"+month+" "+yearofbirth;
-        if (month > 12) {
-            year = 2022 - (2000 + year);
-            month = month - 20;
-        }
-        else {
-            year = 2022 - (1900 + year);
-        }
-        document.getElementById("age").value = year;
-        console.log(value)
-    }
-    else {
-        document.getElementById("birth").value ="";
-        document.getElementById("age").value ="";
-    }
-}
-
     const checkdescription = () => {
         const re = new RegExp('[A-Za-z]+');
         let valid = false;
@@ -145,14 +116,6 @@ const peselEL = document.querySelector('#pesel');
         const re = new RegExp('^[0-9]+$');
         let valid = false;
         const pesel = peselEL.value.trim();
-        const weight = [9,7,3,1,9,7,3,1,9,7];
-        let sum = 0;
-        for (let i =1;i<weight.length;i++) {
-            sum+=(parseInt(pesel.substring(i,i+1),10)*weight[i]);
-        }
-        sum=sum%10;
-        const control = parseInt(pesel.substring(10,11),10);
-        let corectness = (sum === control);
         if (!isRequired(pesel)) {
             showError(peselEL, 'Pole nie może być puste');
             peselEL.style.border="2px red solid";
@@ -161,7 +124,7 @@ const peselEL = document.querySelector('#pesel');
             showError(peselEL, 'Podaj poprawny pesel')
             peselEL.style.border="2px red solid";
         } 
-        else if(!corectness) {
+        else if(!isPeselValid(pesel)) {
             showError(peselEL, 'Podaj poprawny pesel')
             peselEL.style.border="2px red solid";
         }
@@ -172,6 +135,22 @@ const peselEL = document.querySelector('#pesel');
         }
         return valid;
     };
+    const handlePesel = (value) => {
+        const pesel = peselEL.value.trim();
+        if (checkpesel()) {
+           const data = getPeselDate(pesel);
+           console.log(data);
+        document.getElementById("birth").value ="0"+data.day+" 0"+data.month+" "+data.yearofbirth;
+        document.getElementById("age").value = data.year;
+        let select = document.querySelector('select');
+        select.value = data.sex;
+        console.log(value, select.value)
+    }
+    else {
+        document.getElementById("birth").value ="";
+        document.getElementById("age").value ="";
+    }
+}
     const showError = (input, message) => {
         const formitem = input.parentElement;
         formitem.classList.remove('success');
@@ -185,7 +164,7 @@ const peselEL = document.querySelector('#pesel');
         formitem.classList.add('success');
         const error = formitem.querySelector('small');
         error.textContent = '';
-    }
+    }    
     form.addEventListener('submit', function (e) {   
         e.preventDefault();     
         let isFormValid = checkname() &&
@@ -195,7 +174,6 @@ const peselEL = document.querySelector('#pesel');
            checkdescription() &&
            checkpesel();
             if (isFormValid) {
-
             }
     });
     form.addEventListener('input', debounce(function (e) {
@@ -223,59 +201,13 @@ const peselEL = document.querySelector('#pesel');
                 break;
         }
     }));
-    function pesel(){
-        const pesel = peselEL.value.trim();
-        let year = parseInt(pesel.substring(0,2),10);
-        let month = parseInt(pesel.substring(2,4),10)-1;
-        let day = parseInt(pesel.substring(4,6),10);
-        if (month >= 80) {
-            year += 1800;
-            month = month-80;
-        }
-        else if (month >= 60) {
-            year+=2200;
-            month = month-60;
-        }
-        else if (month >= 40) {
-            year+=2100;
-        month = month-40;
-        }
-        else if (month >= 20) {
-            year+=2000;
-            month = month-20;
-        }
-        else {
-            year+=1900;
-        }
-        const dayofbirth = new Date();
-        dayofbirth.setFullYear(year,month,day);
-        let sex = 'Kobieta';
-        if(parseInt(pesel.substring(9,10),10) % 2 === 1){
-            sex = 'Mężczyzna';
-        } 
-        const weight = [9,7,3,1,9,7,3,1,9,7];
-        let sum = 0;
-        for (let i =1;i<weight.length;i++) {
-            sum+=(parseInt(pesel.substring(i,i+1),10)*weight[i]);
-        }
-        sum=sum%10;
-        const control = parseInt(pesel.substring(10,11),10);
-        let corectness = (sum === control);
-        if(corectness){
-            output.innerHTML+= "<br>"+sex/*+"<br>"+dayofbirth*/;
-        }
-        else {
-            output.innerHTML="";
-        }
-    }
 form.onsubmit = function(e){
     e.preventDefault();
     const formData = new FormData(form);
     if (checkname() && checksurname() && /*checkage() &&*/ checkemail() && checkdescription() && checkpesel()) {
         output.innerHTML+=formData.get('name')+"<br>"+formData.get('surname')+"<br>"+
         formData.get('age')+"<br>"+formData.get('email')+"<br>"+formData.get('description')
-        +"<br>"+formData.get('birth')/*+"<br>"+formData.get('select')*/+"<br>"+formData.get('pesel');
-        pesel();
+        +"<br>"+formData.get('birth')+"<br>"+formData.get('select')+"<br>"+formData.get('pesel');
     }
     else {
         fire();
