@@ -1,3 +1,4 @@
+export const peselEL = document.querySelector('#pesel');
 export function psl(){
     const pesel = peselEL.value.trim();
     let year = parseInt(pesel.substring(0,2),10);
