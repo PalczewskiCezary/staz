@@ -142,7 +142,7 @@ const peselEL = document.querySelector('#pesel');
            console.log(data);
         document.getElementById("birth").value ="0"+data.day+" 0"+data.month+" "+data.yearofbirth;
         document.getElementById("age").value = data.year;
-        let select = document.querySelector('select');
+        let select = document.getElementById('select');
         select.value = data.sex;
         console.log(value, select.value)
     }
