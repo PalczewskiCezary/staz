@@ -13,29 +13,31 @@ export function getPeselDate(pesel){
     let month = parseInt(pesel.substring(2,4),10)-1;
     let day = parseInt(pesel.substring(4,6),10);
     let yearofbirth;
+    let date = new Date();
+    let age = date.getFullYear()
     if (month >= 80) {
         yearofbirth = 1800 + year;
-        year += 1800;
+        year = age -(year + 1800);
         month = month-80;
     }
     else if (month >= 60) {
         yearofbirth = 2200 + year;
-        year+=2200;
+        year = age -(year + 2200);
         month = month-60;
     }
     else if (month >= 40) {
         yearofbirth = 2100 + year;
-        year+=2100;
+        year = age -(year + 2100);
     month = month-40;
     }
     else if (month >= 20) {
         yearofbirth = 2000 + year;
-        year+=2000;
+        year = age -(year + 2000);
         month = month-20;
     }
     else {
         yearofbirth = 1900 + year;
-        year+=1900;
+        year = age -(year + 1900);
     }
     let sex = 'Kobieta';
     if(parseInt(pesel.substring(9,10),10) % 2 === 1){
