@@ -13,6 +13,9 @@ body {
  #form {
    display: flex;
    flex-direction: column;
+   width: 250px;
+   padding: 10px;
+   padding-top: 0;
  }
  #button {
    color: black;
@@ -21,7 +24,6 @@ body {
  }
  .form-item {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
@@ -70,7 +72,7 @@ button {
 #navbar {
    align-self: flex-start;
    left: 10px;
-   position: absolute;
+   position: fixed;
    display: flex;
    justify-content: space-between;
    width: 250px;
@@ -89,4 +91,31 @@ a:hover {
    display: flex;
    width: 60vw;
    line-height: 30px;
+   flex-wrap: wrap;
+   border: black solid 2px;
+   padding: 10px;
+}
+hr {
+width: 96%;
+height: 1px;
+background-color: black;
+}
+#filters {
+   left: 10px;
+   top: 10vh;
+   position: fixed;
+   width: 250px;
+   background-color: aliceblue;
+   border: black 2px solid;
+   padding: 10px;
+   font-size: 18px;
+   display: flex;
+   line-height: 30px;
+}
+#btn {
+   align-self: flex-end;
+   color: black;
+   font-size: 15px;
+   font-weight: normal;
+   margin-top: 10px;
 }
