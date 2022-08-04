@@ -60,11 +60,33 @@ p {
 }
 a {
    text-decoration: none;
-  
 }
 button {
    align-self: center;
    color: lime;
    font-size: 30px;
    font-weight: bold;
+}
+#navbar {
+   align-self: flex-start;
+   left: 10px;
+   position: absolute;
+   display: flex;
+   justify-content: space-between;
+   width: 250px;
+   border: black 2px solid;
+   padding: 10px;
+   color: red;
+   font-size: 20px;
+   background-color: aliceblue;
+}
+a:hover {
+   color: darkblue;
+   font-weight: bold;
+   text-shadow: 2px 2px lightblue;
+}
+#output2 {
+   display: flex;
+   width: 60vw;
+   line-height: 30px;
 }
