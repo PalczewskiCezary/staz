@@ -12,6 +12,28 @@
         <a href="index.html">Strona Główna</a>
         <a href="post.html">Filtrowanie</a>
     </div>
+    <div id="filters">
+        <form id=form>
+        <label for="greater">ID wieksze niż</label>
+        <input type="number" name="greater" id="greater">
+        <label for="less">ID mniejsze niż</label>
+        <input type="number" name="less" id="less">
+        <label for="from">ID od</label>
+        <input type="number" name="from" id="from">
+        <label for="to">ID do</label>
+        <input type="number" name="to" id="to">
+        <label for="equal">ID jest równe</label>
+        <input type="number" name="equal" id="equal">
+        <label for="includes">Tekst zawiera</label>
+        <input type="text" name="includes" id="includes">
+        <label for="select">Sortowanie</label>
+        <select name="select" id="select">
+            <option value="az">a-z/0-9</option>
+            <option value="za">z-a/9-0</option>
+        </select>
+        <button type="submit" name="button" id="btn">Wyślij</button>
+    </form>
+    </div>
     <div id="output"></div>
 </body>
 </html>
