@@ -1,30 +1,50 @@
 import axios from "axios";
-
 const url = 'https://jsonplaceholder.typicode.com/posts/';
 function get(url) {
 axios.get(url)
 .then((response) => {
     const output = document.createElement("div");
     output.setAttribute("id", "output2");
-    const object=response.data;
-    let str = JSON.stringify(object);
-    const myArray = str.split("{");
-    console.log(myArray);
-    for(let i=1;i<myArray.length;i++) {
-      output.innerHTML += myArray[i]+"<br>";     
+    const myArray=response.data;
+    for(let i=0;i<myArray.length;i++) {
+      output.innerHTML += "User ID: "+myArray[i].userId+"<br>ID: "+myArray[i].id+"<br>Title: "
+      +myArray[i].title+"<br>"+myArray[i].body+"<br><hr>";     
     }               
     document.body.appendChild(output);                                                                  
-    console.log(object);
 })
   .catch(error => {
     console.log(error)
   })
 }
 get(url);
-
-
-/*
-let sortab = array.sort((id1, id2) => id1.population - id2.population);
-let sortba = array.sort((id1, id2) => id2.population - id1.population);
-console.log(array);
-*/
+  form.onsubmit = function(e){
+    e.preventDefault();
+    const formData = new FormData(form);
+    axios.get(url)
+      .then((response) => {
+        const myArray=response.data;
+        if(formData.get('select') === 'az') {
+          myArray.filter(ids => ids.id > formData.get('greater'));
+          myArray.filter(ids => ids.id < formData.get('less'));
+          myArray.filter(ids => ids.id > formData.get('from') && ids.id < formData.get('to'));
+          myArray.filter(ids => ids.id = formData.get('equal'));
+          myArray.includes(formData.get('includes'))
+          myArray.sort((a, b) => a.myArray.id - b.myArray.id);
+          myArray.map(output.innerHTML=myArray);
+        }
+        else {
+          myArray.filter(ids => ids.id > formData.get('greater'));
+          myArray.filter(ids => ids.id < formData.get('less'));
+          myArray.filter(ids => ids.id > formData.get('from') && ids.id < formData.get('to'));
+          myArray.filter(ids => ids.id = formData.get('equal'));
+          myArray.includes(formData.get('includes'))
+          myArray.sort((a, b) => a.myArray.id - b.myArray.id);
+          myArray.reverse();
+          myArray.map(output.innerHTML=myArray);
+          
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+};
