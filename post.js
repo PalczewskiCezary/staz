@@ -71,7 +71,7 @@ get();
           toFilter = toFilter.filter((row) => row.id == formData.get('equal'));
         }
         if (includes.value.length!=0){
-          toFilter = toFilter.filter(row => row.body.includes(formData.get('includes')) !== -1);
+          toFilter = toFilter.filter(row => row.body.includes(formData.get('includes')) !== false);
         }
       toFilter = toFilter.sort((a, b) => a.id - b.id);
       toFilter = toFilter.reverse();
