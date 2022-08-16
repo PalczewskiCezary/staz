@@ -1,4 +1,42 @@
 import axios from "axios";
+import { createFilters } from "./filter";
+const inputs =     [
+  {
+      label: 'ID wieksze niż',
+      type: 'input',
+      name: 'id',
+      filterType: 'greater',
+      inputType: 'number'
+  },
+  {
+      label: 'ID mniejsze niż',
+      type: 'input',
+      name: 'id',
+      filterType: 'less',
+      inputType: 'number'
+  },
+  {
+      label: 'ID jest równe',
+      type: 'input',
+      name: 'id',
+      filterType: 'equal',
+      inputType: 'number'
+  },
+  {
+      label: 'Tekst zawiera',
+      type: 'input',
+      name: 'id',
+      filterType: 'includes',
+      inputType: 'text'
+  },
+  {
+      label: 'Sortowanie',
+      type: 'select',
+      name: 'id',
+      filterType: 'select',
+      inputType: 'select',
+  }
+]
 const url = 'https://jsonplaceholder.typicode.com/posts/';
 let greater = document.getElementById("greater");
 let less = document.getElementById("less");
@@ -6,6 +44,7 @@ let equal = document.getElementById("equal");
 let includes = document.getElementById("includes");
 let array = []
 let myArray = []
+//createFilters(inputs)
 const output = document.createElement("div");
     output.setAttribute("id", "output2");
     function display(array) {
