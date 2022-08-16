@@ -4,17 +4,22 @@ let greater = document.getElementById("greater");
 let less = document.getElementById("less");
 let equal = document.getElementById("equal");
 let includes = document.getElementById("includes");
+let array = []
 let myArray = []
 const output = document.createElement("div");
     output.setAttribute("id", "output2");
+    function display(array) {
+      for(let i=0;i<array.length;i++) {
+        output.innerHTML += "User ID: "+array[i].userId+"<br>ID: "+array[i].id+"<br>Title: "
+        +array[i].title+"<br>"+array[i].body+"<br><hr>";     
+      } 
+    }
 function get() {
 axios.get(url)
 .then((response) => {
     myArray=response.data;
-    for(let i=0;i<myArray.length;i++) {
-      output.innerHTML += "User ID: "+myArray[i].userId+"<br>ID: "+myArray[i].id+"<br>Title: "
-      +myArray[i].title+"<br>"+myArray[i].body+"<br><hr>";     
-    }               
+    array=myArray;
+    display(array);           
     document.body.appendChild(output);                                                                  
 })
   .catch(error => {
@@ -53,9 +58,7 @@ get();
       toFilter = toFilter.reverse();
       }
       output.innerHTML="";
-      for(let i=0;i<toFilter.length;i++) {
-        output.innerHTML += "User ID: "+toFilter[i].userId+"<br>ID: "+toFilter[i].id+"<br>Title: "
-        +toFilter[i].title+"<br>"+toFilter[i].body+"<br><hr>";     
-      } 
+      array=toFilter;
+      display(array);
       toFilter = toFilter.map(row => console.log(row.userId, row.id, row.title, row.body));    
     };
