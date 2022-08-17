@@ -37,14 +37,10 @@ const inputs =     [
       inputType: 'select',
   }
 ]
+createFilters(inputs);
 const url = 'https://jsonplaceholder.typicode.com/posts/';
-let greater = document.getElementById("greater");
-let less = document.getElementById("less");
-let equal = document.getElementById("equal");
-let includes = document.getElementById("includes");
 let array = []
 let myArray = []
-//createFilters(inputs)
 const output = document.createElement("div");
     output.setAttribute("id", "output2");
     function display(array) {
