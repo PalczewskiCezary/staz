@@ -21,24 +21,20 @@ export function createFilters(inputs) {
         const input = document.createElement(inputs[i].type);
         input.setAttribute("id",inputs[i].filterType);
         input.setAttribute('name', inputs[i].filterType);
-        if(inputs.type != 'input') {
-            let select = document.getElementById('select');
-            let o1 = document.createElement('option');
-            o1.setAttribute('value', 'az');
-            o1.textContent="a-z/0-9";
-            let o2 = document.createElement('option');
-            o2.setAttribute('value', 'za');
-            o2.textContent="z-a/9-0";
-            select.appendChild(o1);
-            select.appendChild(o2);
+        if(inputs[i].type != 'input') {
+            let o1 = new Option('a-z/0-9','az'); 
+            let o2 = new Option('z-a/9-0','za');
+            input.appendChild(o1);
+            input.appendChild(o2);  
         }
         else {
             input.setAttribute('type', inputs[i].inputType);
         }
         items.appendChild(label);
         items.appendChild(input);
-        filters.appendChild(items);
+        form.appendChild(items);
     }
+    form.appendChild(submit);
     filters.appendChild(form);
     document.body.appendChild(filters);
 }
