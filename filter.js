@@ -1,3 +1,4 @@
+let array = []
 export function createFilters(inputs) {
     const filters = document.createElement("div");
     filters.setAttribute('id', 'filters');
@@ -11,14 +12,14 @@ export function createFilters(inputs) {
     submit.setAttribute('type', 'submit');
     submit.textContent='Wyślij';
     for (let i=0;i<inputs.length;i++){
-        const label= document.createElement('label');
+        let label= document.createElement('label');
         label.setAttribute('for',inputs[i].filterType);
         label.textContent=inputs[i].label;
 
-        const items = document.createElement('div');
+        let items = document.createElement('div');
         items.setAttribute('class', 'form-item');
 
-        const input = document.createElement(inputs[i].type);
+        let input = document.createElement(inputs[i].type);
         input.setAttribute("id",inputs[i].filterType);
         input.setAttribute('name', inputs[i].filterType);
         if(inputs[i].type != 'input') {
@@ -38,3 +39,26 @@ export function createFilters(inputs) {
     filters.appendChild(form);
     document.body.appendChild(filters);
 }
+
+export  function myfilters(myArray) {
+    const formData = new FormData(form);
+    let toFilter = myArray;
+      if (formData.get('greater').length!=0){
+      toFilter = toFilter.filter((row) => row.id > formData.get('greater'));
+      }
+      if (formData.get('less').length!=0){
+        toFilter = toFilter.filter((row) => row.id < formData.get('less'));
+      }
+      if (formData.get('equal').length!=0){
+        toFilter = toFilter.filter((row) => row.id == formData.get('equal'));
+      }
+      if (formData.get('includes').length!=0){
+        toFilter = toFilter.filter(row => row.body.includes(formData.get('includes')) !== false);
+      }
+      if(formData.get('select') !== 'az') {
+      toFilter = toFilter.reverse();
+      }
+      array=toFilter;
+      console.log(array);
+      return array;
+};
