@@ -94,6 +94,8 @@ a:hover {
    flex-wrap: wrap;
    border: black solid 2px;
    padding: 10px;
+   align-items: center;
+   margin-left: 10vw;
 }
 hr {
 width: 96%;
