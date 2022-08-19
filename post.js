@@ -4,38 +4,31 @@ const inputs =     [
   {
       label: 'ID wieksze niż',
       type: 'input',
-      name: 'id',
+      name: 'idGreater',
       filterType: 'greater',
-      inputType: 'number'
+      inputType: 'number',
   },
   {
       label: 'ID mniejsze niż',
       type: 'input',
-      name: 'id',
+      name: 'idLess',
       filterType: 'less',
-      inputType: 'number'
+      inputType: 'number',
   },
   {
       label: 'ID jest równe',
       type: 'input',
-      name: 'id',
+      name: 'idEqual',
       filterType: 'equal',
-      inputType: 'number'
+      inputType: 'number',
   },
   {
       label: 'Tekst zawiera',
       type: 'input',
-      name: 'id',
+      name: 'idIncludes',
       filterType: 'includes',
-      inputType: 'text'
+      inputType: 'text',
   },
-  {
-      label: 'Sortowanie',
-      type: 'select',
-      name: 'id',
-      filterType: 'select',
-      inputType: 'select',
-  }
 ]
 createFilters(inputs);
 const url = 'https://jsonplaceholder.typicode.com/posts/';
@@ -50,7 +43,6 @@ function display(array) {
         document.body.appendChild(output);  
       } 
     }
-    
 function get() {
 axios.get(url)
 .then((response) => {
@@ -66,5 +58,5 @@ get();
   form.onsubmit = function(e){
     e.preventDefault();
       output.innerHTML="";
-      display(myfilters(myArray));
+      display(myfilters(myArray, inputs));
     };
