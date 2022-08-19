@@ -66,6 +66,5 @@ get();
   form.onsubmit = function(e){
     e.preventDefault();
       output.innerHTML="";
-      myfilters(myArray); 
       display(myfilters(myArray));
     };
